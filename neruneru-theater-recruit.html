@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ねるねるシアター ─ 月雲ねる生誕企画 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*
+  ╔═══════════════════════════════════════════╗
+  ║  ★ 編集ガイド ★                          ║
+  ║  URLや日程の変更はこのCSSの下の            ║
+  ║  HTMLの中を直接書き換えてください。        ║
+  ║  フォームURLは ctrl+F で                   ║
+  ║  「FORM_URL」と検索すると見つかります。    ║
+  ║  締切日は「DEADLINE」で検索できます。      ║
+  ╚═══════════════════════════════════════════╝
+*/
+
+:root {
+  --bg-deep: #0e0c18;
+  --bg-stage: #161228;
+  --curtain: #1e1535;
+  --curtain-light: #2a1f45;
+  --gold: #c9a84c;
+  --gold-dim: #8a7535;
+  --gold-glow: #e8c55a;
+  --lavender: #9b7dd4;
+  --lavender-light: #c4a8f0;
+  --rose: #b8849a;
+  --cream: #e8e2d8;
+  --cream-dim: #9a9088;
+  --border: #2e2548;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--cream);
+  font-family: 'Noto Sans JP', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── ヘッダー：劇場の幕 ─── */
+.theater-header {
+  position: relative;
+  text-align: center;
+  padding: 60px 20px 40px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #1a1030 0%, var(--bg-deep) 100%);
+}
+.theater-header::before,
+.theater-header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  pointer-events: none;
+}
+.theater-header::before {
+  left: 0;
+  background: linear-gradient(100deg, rgba(80,30,60,0.35) 0%, transparent 60%);
+}
+.theater-header::after {
+  right: 0;
+  background: linear-gradient(260deg, rgba(80,30,60,0.35) 0%, transparent 60%);
+}
+
+.curtain-drape {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-dim));
+}
+
+.header-ornament {
+  font-size: 14px;
+  color: var(--gold-dim);
+  letter-spacing: 6px;
+  margin-bottom: 16px;
+}
+
+.theater-logo {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.theater-logo .moon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 0 12px rgba(155,125,212,0.4));
+}
+.theater-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--cream);
+  letter-spacing: 4px;
+  text-shadow: 0 0 30px rgba(155,125,212,0.3);
+  line-height: 1.3;
+}
+.theater-subtitle {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  margin-top: 12px;
+}
+.theater-date {
+  font-size: 13px;
+  color: var(--cream-dim);
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+.header-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 20px auto 0;
+}
+
+/* ─── メインコンテンツ ─── */
+.main-content {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+/* ─── イントロ ─── */
+.intro {
+  text-align: center;
+  padding: 32px 0 24px;
+}
+.intro-text {
+  font-size: 14px;
+  color: var(--cream);
+  line-height: 2;
+  font-family: 'Shippori Mincho', serif;
+}
+.intro-text em {
+  font-style: normal;
+  color: var(--lavender-light);
+}
+
+/* ─── セクション共通 ─── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 36px 0 20px;
+}
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+.section-divider-text {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 3px;
+  white-space: nowrap;
+}
+
+/* ─── 募集カード：チケット風 ─── */
+.ticket-card {
+  position: relative;
+  background: var(--curtain);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.ticket-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-dim));
+}
+
+.ticket-header {
+  padding: 20px 20px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.ticket-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(155,125,212,0.12);
+  border: 1px solid rgba(155,125,212,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.ticket-info { flex: 1; }
+.ticket-name {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+.ticket-desc {
+  font-size: 13px;
+  color: var(--cream-dim);
+  line-height: 1.7;
+}
+
+.ticket-body {
+  padding: 16px 20px;
+}
+.ticket-deadline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.ticket-cta {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, var(--lavender), #7b5db8);
+  color: #fff;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(155,125,212,0.25);
+}
+.ticket-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(155,125,212,0.35);
+}
+
+.ticket-stub {
+  position: relative;
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.02);
+  border-top: 1px dashed var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--cream-dim);
+}
+
+/* ─── スケジュール ─── */
+.schedule-card {
+  background: var(--curtain);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 20px;
+  margin-bottom: 16px;
+}
+.schedule-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 2px;
+}
+.schedule-dot-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 16px;
+}
+.schedule-dot {
+  width: 10px; height: 10px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.schedule-line {
+  width: 1px; flex: 1; min-height: 16px;
+  background: var(--border);
+}
+.schedule-content { flex: 1; padding-bottom: 18px; }
+.schedule-date {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 13px; font-weight: 600;
+  margin-bottom: 3px;
+}
+.schedule-task {
+  font-size: 12px;
+  color: var(--cream-dim);
+  line-height: 1.6;
+}
+
+/* ─── 注意事項 ─── */
+.notes-card {
+  background: var(--curtain);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 20px;
+}
+.notes-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.notes-item {
+  font-size: 12px;
+  color: var(--cream-dim);
+  line-height: 1.8;
+  padding-left: 16px;
+  position: relative;
+  margin-bottom: 8px;
+}
+.notes-item::before {
+  content: "◆";
+  position: absolute;
+  left: 0;
+  color: var(--gold-dim);
+  font-size: 10px;
+}
+
+/* ─── SNSリンク ─── */
+.sns-section {
+  text-align: center;
+  padding: 24px 0;
+}
+.sns-label {
+  font-size: 12px;
+  color: var(--cream-dim);
+  margin-bottom: 10px;
+}
+.sns-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--lavender-light);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border: 1px solid rgba(155,125,212,0.3);
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+.sns-link:hover {
+  background: rgba(155,125,212,0.1);
+}
+
+/* ─── フッター ─── */
+.theater-footer {
+  text-align: center;
+  padding: 30px 20px;
+  border-top: 1px solid var(--border);
+}
+.footer-ornament {
+  font-size: 12px;
+  color: var(--gold-dim);
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+}
+.footer-text {
+  font-size: 11px;
+  color: var(--cream-dim);
+  line-height: 1.8;
+}
+.footer-credit {
+  font-size: 10px;
+  color: rgba(255,255,255,0.15);
+  margin-top: 16px;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ ヘッダー ═══ -->
+<header class="theater-header">
+  <div class="curtain-drape"></div>
+  <div class="header-ornament">─ ✦ ─</div>
+  <div class="theater-logo">
+    <span class="moon">☽</span>
+    <h1 class="theater-title">ねるねる<br>シアター</h1>
+  </div>
+  <p class="theater-subtitle">月雲ねる 生誕企画 2025</p>
+  <!-- DEADLINE: 生誕日 -->
+  <p class="theater-date">2025.9.15 ─ Birthday</p>
+  <div class="header-line"></div>
+</header>
+
+<!-- ═══ メインコンテンツ ═══ -->
+<main class="main-content">
+
+  <!-- イントロ -->
+  <div class="intro">
+    <p class="intro-text">
+      この劇場の主役は、<em>月雲ねる</em>。<br>
+      みんなの想いが集まって、<br>
+      世界にひとつの舞台が幕を開けます。<br><br>
+      お祝いメッセージやファンアートなど、<br>
+      みなさまからの<em>ご参加</em>をお待ちしています。
+    </p>
+  </div>
+
+  <!-- ─── 募集企画 ─── -->
+  <div class="section-divider">
+    <span class="section-divider-text">募 集 企 画</span>
+  </div>
+
+  <!-- 1. お祝いメッセージ -->
+  <div class="ticket-card">
+    <div class="ticket-header">
+      <div class="ticket-icon">💌</div>
+      <div class="ticket-info">
+        <div class="ticket-name">お祝いメッセージ</div>
+        <div class="ticket-desc">
+          ねるちゃんへのお祝いの言葉を<br>お寄せください。
+          アルバムに掲載いたします。
+        </div>
+      </div>
+    </div>
+    <div class="ticket-body">
+      <!-- DEADLINE: メッセージ締切 -->
+      <div class="ticket-deadline">📅 締切：2025年8月31日</div>
+      <!-- FORM_URL: メッセージフォーム -->
+      <a href="https://forms.gle/XXXXXXXXXX" target="_blank" class="ticket-cta">
+        メッセージを送る →
+      </a>
+    </div>
+    <div class="ticket-stub">
+      <span>NERUNERU THEATER</span>
+      <span>MESSAGE</span>
+    </div>
+  </div>
+
+  <!-- 2. アンケート -->
+  <div class="ticket-card">
+    <div class="ticket-header">
+      <div class="ticket-icon">📊</div>
+      <div class="ticket-info">
+        <div class="ticket-name">アンケート</div>
+        <div class="ticket-desc">
+          ねるちゃんに関するアンケートです。<br>
+          結果はランキング形式で<br>アルバムに掲載します。
+        </div>
+      </div>
+    </div>
+    <div class="ticket-body">
+      <!-- DEADLINE: アンケート締切 -->
+      <div class="ticket-deadline">📅 締切：2025年8月15日</div>
+      <!-- FORM_URL: アンケートフォーム -->
+      <a href="https://forms.gle/YYYYYYYYYY" target="_blank" class="ticket-cta">
+        アンケートに回答する →
+      </a>
+    </div>
+    <div class="ticket-stub">
+      <span>NERUNERU THEATER</span>
+      <span>QUESTIONNAIRE</span>
+    </div>
+  </div>
+
+  <!-- 3. ファンアート -->
+  <div class="ticket-card">
+    <div class="ticket-header">
+      <div class="ticket-icon">🎨</div>
+      <div class="ticket-info">
+        <div class="ticket-name">ファンアート募集</div>
+        <div class="ticket-desc">
+          ねるちゃんのイラストを募集します。<br>
+          お寄せいただいた作品は<br>
+          オリジナルグッズとして制作し、<br>
+          ねるちゃんにプレゼントします。
+        </div>
+      </div>
+    </div>
+    <div class="ticket-body">
+      <!-- DEADLINE: ファンアート締切 -->
+      <div class="ticket-deadline">📅 締切：2025年8月31日</div>
+      <!-- FORM_URL: ファンアートフォーム -->
+      <a href="https://forms.gle/ZZZZZZZZZZ" target="_blank" class="ticket-cta">
+        ファンアートを応募する →
+      </a>
+    </div>
+    <div class="ticket-stub">
+      <span>NERUNERU THEATER</span>
+      <span>FAN ART</span>
+    </div>
+  </div>
+
+  <!-- ─── スケジュール ─── -->
+  <div class="section-divider">
+    <span class="section-divider-text">公 演 日 程</span>
+  </div>
+
+  <div class="schedule-card">
+    <div class="schedule-item">
+      <div class="schedule-dot-col">
+        <div class="schedule-dot" style="background:var(--lavender)"></div>
+        <div class="schedule-line"></div>
+      </div>
+      <div class="schedule-content">
+        <!-- DEADLINE: 募集開始 -->
+        <div class="schedule-date" style="color:var(--lavender)">7月中旬〜</div>
+        <div class="schedule-task">募集開始（メッセージ・アンケート・ファンアート）</div>
+      </div>
+    </div>
+    <div class="schedule-item">
+      <div class="schedule-dot-col">
+        <div class="schedule-dot" style="background:var(--gold)"></div>
+        <div class="schedule-line"></div>
+      </div>
+      <div class="schedule-content">
+        <!-- DEADLINE: アンケート締切 -->
+        <div class="schedule-date" style="color:var(--gold)">8月15日</div>
+        <div class="schedule-task">アンケート締切</div>
+      </div>
+    </div>
+    <div class="schedule-item">
+      <div class="schedule-dot-col">
+        <div class="schedule-dot" style="background:var(--gold)"></div>
+        <div class="schedule-line"></div>
+      </div>
+      <div class="schedule-content">
+        <!-- DEADLINE: メッセージ・ファンアート締切 -->
+        <div class="schedule-date" style="color:var(--gold)">8月31日</div>
+        <div class="schedule-task">メッセージ・ファンアート締切</div>
+      </div>
+    </div>
+    <div class="schedule-item">
+      <div class="schedule-dot-col">
+        <div class="schedule-dot" style="background:var(--rose);box-shadow:0 0 8px rgba(184,132,154,0.5)"></div>
+      </div>
+      <div class="schedule-content" style="padding-bottom:0">
+        <div class="schedule-date" style="color:var(--rose)">9月15日 🎂</div>
+        <div class="schedule-task">生誕ライブ</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 注意事項 ─── -->
+  <div class="section-divider">
+    <span class="section-divider-text">ご 案 内</span>
+  </div>
+
+  <div class="notes-card">
+    <div class="notes-title">ご参加にあたって</div>
+    <div class="notes-item">本企画はファン有志による非公式の企画です。</div>
+    <div class="notes-item">企画の内容はご本人へのサプライズのため、SNS等での拡散はお控えください。</div>
+    <div class="notes-item">お寄せいただいた作品・メッセージは、アルバムやグッズの制作に使用させていただきます。</div>
+    <div class="notes-item">締切日を過ぎてのご応募は対応いたしかねます。ご了承ください。</div>
+    <div class="notes-item">本用紙が不要の場合は回収いたします。会場周辺に捨てないようご協力をお願いいたします。</div>
+  </div>
+
+  <!-- SNSリンク -->
+  <div class="sns-section">
+    <div class="sns-label">企画に関するお問い合わせ</div>
+    <!-- SNS_URL: X企画アカウント -->
+    <a href="https://twitter.com/tkmnr_f" target="_blank" class="sns-link">
+      𝕏 @tkmnr_f
+    </a>
+  </div>
+
+</main>
+
+<!-- ═══ フッター ═══ -->
+<footer class="theater-footer">
+  <div class="footer-ornament">─ ✦ ─</div>
+  <div class="footer-text">
+    みんなの想いが集まって、<br>
+    世界にひとつの「ねるねるシアター」が完成します。
+  </div>
+  <div class="footer-credit">
+    月雲ねる応援企画委員会
+  </div>
+</footer>
+
+</body>
+</html>
