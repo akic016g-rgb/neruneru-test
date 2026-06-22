@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎭 ねるねるシアター 企画コンテンツ概要</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap');
+  
+  :root {
+    --bg: #1a1625;
+    --surface: #231f35;
+    --surface-light: #2d2845;
+    --accent: #9b7dd4;
+    --accent-light: #c4a8f0;
+    --green: #6bcf7f;
+    --green-bg: #1a2e1f;
+    --yellow: #f0c96b;
+    --yellow-bg: #2e2a1a;
+    --red: #f07b7b;
+    --red-bg: #2e1a1a;
+    --blue: #7baaf0;
+    --blue-bg: #1a2235;
+    --pink: #f0a0c0;
+    --pink-bg: #2e1a25;
+    --text: #e8e4f0;
+    --text-dim: #9990aa;
+    --border: #3a3455;
+  }
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', -apple-system, sans-serif;
+    min-height: 100vh;
+  }
+  
+  .container { max-width: 480px; margin: 0 auto; padding: 20px 16px; }
+  
+  .header { text-align: center; margin-bottom: 20px; }
+  .header-sub { font-size: 13px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 4px; }
+  .header-title { font-size: 20px; font-weight: 800; color: var(--accent-light); }
+  
+  .tabs {
+    display: flex; gap: 4px; margin-bottom: 16px;
+    overflow-x: auto; padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab {
+    padding: 8px 12px; border-radius: 10px; border: none;
+    background: var(--surface-light); color: var(--text-dim);
+    font-size: 12px; font-weight: 500; cursor: pointer;
+    white-space: nowrap; font-family: inherit;
+    transition: all 0.2s ease;
+  }
+  .tab.active { background: var(--accent); color: #fff; font-weight: 700; }
+  
+  .filters { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 5px 10px; border-radius: 8px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text-dim); font-size: 11px; cursor: pointer;
+    font-family: inherit; transition: all 0.2s ease;
+  }
+  .filter-btn.active {
+    border-color: var(--accent); background: rgba(155,125,212,0.13);
+    color: var(--accent-light);
+  }
+  
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 6px;
+    font-size: 11px; font-weight: 700;
+  }
+  
+  .card {
+    background: var(--surface); border-radius: 12px; padding: 14px;
+    border: 1px solid var(--border); cursor: pointer;
+    margin-bottom: 10px; transition: all 0.2s ease;
+  }
+  .card.highlight {
+    background: linear-gradient(135deg, rgba(155,125,212,0.08), var(--surface));
+    border-color: rgba(155,125,212,0.4);
+  }
+  .card-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .card-title-wrap { display: flex; align-items: center; gap: 8px; flex: 1; }
+  .card-icon { font-size: 20px; }
+  .card-name { color: var(--text); font-size: 14px; font-weight: 700; line-height: 1.4; }
+  .card-arrow {
+    color: var(--text-dim); font-size: 16px;
+    transition: transform 0.2s ease;
+  }
+  .card-arrow.expanded { transform: rotate(180deg); }
+  .card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  
+  .card-detail {
+    display: none; flex-direction: column; gap: 8px;
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .card-detail.show { display: flex; }
+  .detail-row { display: flex; gap: 8px; }
+  .detail-label { color: var(--text-dim); font-size: 12px; min-width: 56px; }
+  .detail-value { font-size: 12px; }
+  .detail-notes {
+    background: var(--surface-light); border-radius: 8px; padding: 10px;
+    margin-top: 4px; color: var(--text-dim); font-size: 12px; line-height: 1.7;
+  }
+  
+  .section-title { color: var(--text-dim); font-size: 13px; margin: 20px 0 10px; }
+  
+  .other-item {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border-radius: 10px; padding: 10px 12px;
+    border: 1px solid var(--border); margin-bottom: 8px;
+  }
+  .other-icon { font-size: 18px; }
+  .other-info { flex: 1; }
+  .other-name { color: var(--text); font-size: 13px; font-weight: 600; }
+  .other-deadline { color: var(--text-dim); font-size: 11px; }
+  
+  .member-card {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface); border-radius: 10px; padding: 10px 12px;
+    border: 1px solid var(--border); margin-bottom: 8px;
+  }
+  .member-avatar {
+    width: 32px; height: 32px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; flex-shrink: 0;
+  }
+  .member-info { flex: 1; min-width: 0; }
+  .member-name-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+  .member-name { color: var(--text); font-size: 13px; font-weight: 700; }
+  .member-mbti { font-size: 10px; padding: 1px 6px; border-radius: 4px; }
+  .member-role { color: var(--accent-light); font-size: 11px; margin-bottom: 1px; }
+  .member-skills { color: var(--text-dim); font-size: 11px; }
+  
+  .timeline-item { display: flex; gap: 12px; }
+  .timeline-line { display: flex; flex-direction: column; align-items: center; width: 20px; }
+  .timeline-dot {
+    width: 12px; height: 12px; border-radius: 6px; flex-shrink: 0;
+  }
+  .timeline-connector { width: 2px; flex: 1; min-height: 20px; background: var(--border); }
+  .timeline-content { flex: 1; padding-bottom: 16px; }
+  .timeline-date { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+  .timeline-task { color: var(--text); font-size: 12px; line-height: 1.6; padding-left: 8px; }
+  
+  .undecided-card {
+    background: var(--surface); border-radius: 12px; padding: 14px;
+    border: 1px solid var(--border); margin-bottom: 10px;
+  }
+  .undecided-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .undecided-icon { font-size: 20px; }
+  .undecided-question { color: var(--accent-light); font-size: 14px; font-weight: 700; }
+  .undecided-context {
+    color: var(--text-dim); font-size: 12px; line-height: 1.7;
+    white-space: pre-line; margin-bottom: 8px;
+    padding: 8px 10px; background: var(--surface-light); border-radius: 8px;
+  }
+  .undecided-action { display: flex; align-items: center; gap: 6px; }
+  .undecided-action span { color: var(--green); font-size: 12px; font-weight: 600; }
+  
+  .footer {
+    margin-top: 24px; padding: 12px;
+    background: var(--surface-light); border-radius: 10px;
+    border: 1px solid var(--border); text-align: center;
+    color: var(--text-dim); font-size: 11px;
+  }
+  
+  .view { display: none; }
+  .view.active { display: block; }
+  
+  .helpers-section { border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px; }
+  .helpers-label { color: var(--text-dim); font-size: 11px; margin-bottom: 6px; }
+  .helpers-item { color: var(--text); font-size: 12px; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="header-sub">NERUNERU THEATER 2025</div>
+    <h1 class="header-title">🎭 企画コンテンツ概要</h1>
+  </div>
+
+  <div class="tabs" id="mainTabs">
+    <button class="tab active" data-view="contents">📋 コンテンツ一覧</button>
+    <button class="tab" data-view="members">👥 メンバー</button>
+    <button class="tab" data-view="timeline">📅 スケジュール</button>
+    <button class="tab" data-view="undecided">❓ 未決定事項</button>
+  </div>
+
+  <!-- Contents View -->
+  <div class="view active" id="view-contents">
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-filter="all">すべて</button>
+      <button class="filter-btn" data-filter="high">🔴 優先度高</button>
+      <button class="filter-btn" data-filter="mid">🟡 中</button>
+      <button class="filter-btn" data-filter="low">🔵 低</button>
+      <button class="filter-btn" data-filter="recruit">📢 募集あり</button>
+    </div>
+    <div id="contentCards"></div>
+
+    <h3 class="section-title">📦 アルバム以外の制作物</h3>
+    <div id="otherItems"></div>
+  </div>
+
+  <!-- Members View -->
+  <div class="view" id="view-members">
+    <div id="memberCards"></div>
+  </div>
+
+  <!-- Timeline View -->
+  <div class="view" id="view-timeline">
+    <div id="timelineItems"></div>
+  </div>
+
+  <!-- Undecided View -->
+  <div class="view" id="view-undecided">
+    <div id="undecidedItems"></div>
+  </div>
+
+  <div class="footer">最終更新：2026/6/22 ｜ ねるねるシアター企画委員用</div>
+</div>
+
+<script>
+const contents = [
+  { id:1, name:"お祝いメッセージ", icon:"💌", priority:"high", status:"confirmed", needsRecruit:true, recruitMethod:"オンラインフォーム（QR）", deadline:"8/31", assignee:"フォーム管理：未定", notes:"去年は手書きメセカ→今年はオンライン化。7/15〜紙配布で募集開始", highlight:false },
+  { id:2, name:"アンケート／ランキング", icon:"📊", priority:"high", status:"confirmed", needsRecruit:true, recruitMethod:"Googleフォーム", deadline:"8/15", assignee:"フォーム管理：要相談", notes:"集計は8月中旬完了マスト。締切厳守できる人に", highlight:false },
+  { id:3, name:"ファンアート → トレカ or ブロマイド", icon:"🎨", priority:"high", status:"planning", needsRecruit:true, recruitMethod:"フォーム＋X企画アカウント", deadline:"8月末", assignee:"イラスト：ぱるかちゃん＋公募ファン有志", notes:"ねるちゃんへのプレゼント。トレカかブロマイドか未確定。アルミ袋ブラインド封入。トレカ両面10枚850円の印刷先あり", highlight:false },
+  { id:4, name:"アクスタ一覧", icon:"🧸", priority:"high", status:"confirmed", needsRecruit:false, recruitMethod:"", deadline:"7月中に素材集め", assignee:"委員内で対応", notes:"去年ねるちゃん本人に喜ばれた実績あり。この1年で発売されたアクスタを撮影・一覧化", highlight:false },
+  { id:5, name:"ソロお仕事アーカイブ", icon:"📸", priority:"high", status:"confirmed", needsRecruit:true, recruitMethod:"一部ファンから写真・感想募集", deadline:"7月中に素材集め", assignee:"未定", notes:"chalmière モデル、Neru Neru Tea Party、Merveille、9周年ライブ等", highlight:false },
+  { id:6, name:"アルバム音楽（QR）", icon:"🎵", priority:"high", status:"planning", needsRecruit:false, recruitMethod:"", deadline:"8月中旬", assignee:"制作：アキコ ／ 音楽P：要相談", notes:"Sunoで制作、QRコードで聴ける形式。前例のない斬新な企画！クオリティは個人的にいけると判断、メンバーの反応待ち。音楽の方向性を相談できる人がほしい", highlight:true },
+  { id:7, name:"ねるちゃんの好きコンテンツ要素", icon:"🎭", priority:"high", status:"planning", needsRecruit:false, recruitMethod:"", deadline:"随時情報収集中", assignee:"情報収集：委員全体", notes:"M!LK / まほやく / ヒプステ / セラムンシアター / あくねこ / サンリオ / ブレマイ / （龍が如く）。アルバムの各所にちりばめたい。この情報をもとに新規企画や表紙・デザインの方向性を決めていく", highlight:false },
+  { id:8, name:"名シーン集", icon:"📷", priority:"mid", status:"idea", needsRecruit:true, recruitMethod:"写真＋コメント募集", deadline:"未定", assignee:"未定", notes:"ファンから写真とコメントを集めてまとめる", highlight:false },
+  { id:9, name:"コーデ／推し活集", icon:"👗", priority:"low", status:"idea", needsRecruit:true, recruitMethod:"インスタ等から", deadline:"未定", assignee:"未定", notes:"サンリオ・ディズニー等テーマごとにまとめる案。余裕があれば", highlight:false },
+];
+
+const otherItemsData = [
+  { name:"配布用紙デザイン＋印刷", icon:"📄", deadline:"デザイン 7/12（アキコ）→ 印刷・カット 7/14まで", status:"confirmed" },
+  { name:"Linktree（企画募集ページ）", icon:"🔗", deadline:"7/15の紙配布までに", status:"planning" },
+  { name:"DSのぼり", icon:"🏪", deadline:"未定", status:"idea", note:"約5,000円。ディアステージ店舗前に飾れる" },
+  { name:"フラスタ", icon:"💐", deadline:"生誕ライブ当日", status:"confirmed", note:"毎年恒例" },
+];
+
+const members = [
+  { name:"アキコ", mbti:"ENFP", role:"クリエイティブディレクター", skills:"コンセプト・デザイン・ページ制作・音楽制作", color:"#f0c96b" },
+  { name:"かなっぴさん", mbti:"INFP", role:"全体統括", skills:"進行・手作業・スマホ作業", color:"#c4a8f0" },
+  { name:"Skyさん", mbti:"ESTJ", role:"運営・連絡係", skills:"会場やりとり・フォーム・ブレーキ係", color:"#6bcf7f" },
+  { name:"ガンチャンさん", mbti:"INFJ", role:"データ管理候補", skills:"アンケート集計・ベーシスト・工作", color:"#7baaf0" },
+  { name:"めんやさん", mbti:"ENFP", role:"雑務・フォーム", skills:"買い出し・ディスカッション", color:"#f0c96b" },
+  { name:"ねったいやさん", mbti:"不明", role:"技術・現場", skills:"プログラマー・ビラ配り・Bot開発", color:"#9990aa" },
+  { name:"りえさん", mbti:"INFJ", role:"アイデア・手作業", skills:"初参加・舞台好き・遠方", color:"#7baaf0" },
+  { name:"あしーたさん", mbti:"ISFP", role:"工作", skills:"飛び出す工作の実績あり", color:"#f0a0c0" },
+  { name:"るりいろさん", mbti:"xNFP", role:"イラスト・Canva", skills:"イラスト・工作・アルバム制作経験", color:"#c4a8f0" },
+];
+
+const timelineData = [
+  { date:"〜7月上旬", items:["アルバム方向性・コンテンツ確定","担当振り","募集フォーム＋Linktree準備"], phase:"planning" },
+  { date:"〜7/12", items:["配布用紙デザイン完成（アキコ）"], phase:"planning" },
+  { date:"7/12〜14", items:["印刷・カット（担当：要相談）"], phase:"planning" },
+  { date:"7/15〜", items:["紙配布開始（定期イベントから）","X企画アカウント告知","メッセージ・アンケート・ファンアート募集スタート"], phase:"launch" },
+  { date:"8月中旬", items:["メッセージ・アンケート締切＆集計完了"], phase:"deadline" },
+  { date:"8月末", items:["ファンアート締切","パンフレット入稿"], phase:"deadline" },
+  { date:"9月頭", items:["トレカ（orブロマイド）入稿"], phase:"deadline" },
+  { date:"9/15 🎂", items:["生誕ライブ！！"], phase:"goal" },
+];
+
+const undecidedData = [
+  { question:"トレカ or ブロマイド？", context:"トレカ：裏面でグッズ感、ねるちゃんもフォトカ文化好き\nブロマイド：観劇グッズ定番、イラスト大きく見れる", action:"かなっぴさんと相談して決める", icon:"🎴" },
+  { question:"好きコンテンツ情報の使い方", context:"アルバムの各所にちりばめる方針。\nこの情報をもとに新規企画や表紙・デザインの方向性を決めたい。\n随時情報収集中！", action:"委員全体で引き続き情報集め", icon:"🎭" },
+  { question:"パンフのビジュアル方向性", context:"ダークファンタジー？ゴシック？\nねるちゃんの好きな世界観ベース？\n表紙デザイン案をメンバーから募集予定", action:"Pinterestや参考資料集めから", icon:"🎨" },
+  { question:"印刷会社・納期", context:"パンフレット本体の印刷先がまだ未定", action:"早めに調査・見積り必要", icon:"🖨️" },
+  { question:"DSのぼり、やる？", context:"約5,000円。ディアステージ店舗前に飾れる", action:"予算と相談", icon:"🏪" },
+  { question:"アルバム音楽の方向性", context:"Sunoで制作、QRで聴ける形式。クオリティは個人的にいけると判断", action:"メンバーの反応を見て、音楽の方向性を相談できる人を決める", icon:"🎵" },
+  { question:"Bot導入する？", context:"提案資料作成済み、かなっぴさんに共有済み\nプログラマー（ねったいやさん）に依頼可能", action:"保留中。まず企画内容を固めてから", icon:"🤖" },
+];
+
+const priorityConfig = {
+  high: { label:"高", color:"#f07b7b", bg:"#2e1a1a" },
+  mid: { label:"中", color:"#f0c96b", bg:"#2e2a1a" },
+  low: { label:"低", color:"#7baaf0", bg:"#1a2235" },
+};
+const statusConfig = {
+  confirmed: { label:"確定", color:"#6bcf7f", bg:"#1a2e1f" },
+  planning: { label:"検討中", color:"#f0c96b", bg:"#2e2a1a" },
+  idea: { label:"アイデア段階", color:"#7baaf0", bg:"#1a2235" },
+};
+const phaseColors = { planning:"#9b7dd4", key:"#f0c96b", launch:"#6bcf7f", deadline:"#f07b7b", goal:"#f0a0c0" };
+
+let expandedId = null;
+let currentFilter = "all";
+
+function badge(label, color, bg) {
+  return `<span class="badge" style="background:${bg};color:${color}">${label}</span>`;
+}
+
+function renderContents() {
+  let filtered = contents;
+  if (currentFilter === "recruit") filtered = contents.filter(c => c.needsRecruit);
+  else if (currentFilter !== "all") filtered = contents.filter(c => c.priority === currentFilter);
+
+  document.getElementById("contentCards").innerHTML = filtered.map(item => {
+    const isExp = expandedId === item.id;
+    return `
+      <div class="card ${item.highlight ? 'highlight' : ''}" onclick="toggleCard(${item.id})">
+        <div class="card-header">
+          <div class="card-title-wrap">
+            <span class="card-icon">${item.icon}</span>
+            <span class="card-name">${item.name}</span>
+          </div>
+          <span class="card-arrow ${isExp ? 'expanded' : ''}">▾</span>
+        </div>
+        <div class="card-badges">
+          ${badge('優先度：'+priorityConfig[item.priority].label, priorityConfig[item.priority].color, priorityConfig[item.priority].bg)}
+          ${badge(statusConfig[item.status].label, statusConfig[item.status].color, statusConfig[item.status].bg)}
+          ${item.needsRecruit ? badge('募集あり', '#f0a0c0', '#2e1a25') : ''}
+          ${item.highlight ? badge('✨ NEW', '#c4a8f0', 'rgba(155,125,212,0.2)') : ''}
+        </div>
+        <div class="card-detail ${isExp ? 'show' : ''}">
+          <div class="detail-row">
+            <span class="detail-label">締切</span>
+            <span class="detail-value" style="color:#f0c96b;font-weight:600">${item.deadline}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">担当</span>
+            <span class="detail-value" style="color:var(--text)">${item.assignee}</span>
+          </div>
+          ${item.needsRecruit ? `<div class="detail-row"><span class="detail-label">募集方法</span><span class="detail-value" style="color:var(--text)">${item.recruitMethod}</span></div>` : ''}
+          <div class="detail-notes">📝 ${item.notes}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById("otherItems").innerHTML = otherItemsData.map(item => `
+    <div class="other-item">
+      <span class="other-icon">${item.icon}</span>
+      <div class="other-info">
+        <div class="other-name">${item.name}</div>
+        <div class="other-deadline">${item.deadline}</div>
+        ${item.note ? `<div class="other-deadline">${item.note}</div>` : ''}
+      </div>
+      ${badge(statusConfig[item.status].label, statusConfig[item.status].color, statusConfig[item.status].bg)}
+    </div>
+  `).join('');
+}
+
+function renderMembers() {
+  document.getElementById("memberCards").innerHTML = members.map(m => `
+    <div class="member-card">
+      <div class="member-avatar" style="background:${m.color}22;border:2px solid ${m.color};color:${m.color}">
+        ${m.mbti.slice(0,2)}
+      </div>
+      <div class="member-info">
+        <div class="member-name-row">
+          <span class="member-name">${m.name}</span>
+          <span class="member-mbti" style="color:${m.color};background:${m.color}15">${m.mbti}</span>
+        </div>
+        <div class="member-role">${m.role}</div>
+        <div class="member-skills">${m.skills}</div>
+      </div>
+    </div>
+  `).join('') + `
+    <div class="helpers-section">
+      <div class="helpers-label">＋ 協力者</div>
+      <div class="helpers-item">🎨 <strong>ぱるかちゃん</strong>：イラスト協力（委員外）</div>
+      <div class="helpers-item">📄 <strong>くぅみさん</strong>：ページ制作協力（委員外）</div>
+    </div>
+  `;
+}
+
+function renderTimeline() {
+  document.getElementById("timelineItems").innerHTML = timelineData.map((e, i) => `
+    <div class="timeline-item">
+      <div class="timeline-line">
+        <div class="timeline-dot" style="background:${phaseColors[e.phase]};border:2px solid ${phaseColors[e.phase]};${e.phase==='goal'?'box-shadow:0 0 10px rgba(240,160,192,0.4)':''}"></div>
+        ${i < timelineData.length-1 ? '<div class="timeline-connector"></div>' : ''}
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-date" style="color:${phaseColors[e.phase]}">${e.date}</div>
+        ${e.items.map(item => `<div class="timeline-task">${e.phase==='goal'?'🎉 ':'• '}${item}</div>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderUndecided() {
+  document.getElementById("undecidedItems").innerHTML = undecidedData.map(item => `
+    <div class="undecided-card">
+      <div class="undecided-header">
+        <span class="undecided-icon">${item.icon}</span>
+        <span class="undecided-question">${item.question}</span>
+      </div>
+      <div class="undecided-context">${item.context}</div>
+      <div class="undecided-action">
+        <span>→</span>
+        <span>${item.action}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCard(id) {
+  expandedId = expandedId === id ? null : id;
+  renderContents();
+}
+
+// Tab switching
+document.getElementById("mainTabs").addEventListener("click", function(e) {
+  const btn = e.target.closest(".tab");
+  if (!btn) return;
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById("view-" + btn.dataset.view).classList.add("active");
+});
+
+// Filter switching
+document.getElementById("filters").addEventListener("click", function(e) {
+  const btn = e.target.closest(".filter-btn");
+  if (!btn) return;
+  document.querySelectorAll(".filter-btn").forEach(f => f.classList.remove("active"));
+  btn.classList.add("active");
+  currentFilter = btn.dataset.filter;
+  renderContents();
+});
+
+// Initial render
+renderContents();
+renderMembers();
+renderTimeline();
+renderUndecided();
+</script>
+</body>
+</html>
