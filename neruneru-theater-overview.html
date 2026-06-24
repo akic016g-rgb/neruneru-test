@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ねるねるシアター ─ 企画概要</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/*
+  ═══════════════════════════════════════
+  ★ 編集ガイド ★
+  - 日程変更 → 「DEADLINE」で検索
+  - フォームURL → 「FORM_URL」で検索
+  - 担当者変更 → 「STAFF」で検索
+  - コンテンツ追加 → .content-card をコピー
+  ═══════════════════════════════════════
+*/
+:root {
+  --bg: #12101e;
+  --bg-grad-top: #1e1838;
+  --surface: #1c1832;
+  --surface-light: #252040;
+  --surface-glow: #2d2650;
+  --gold: #c9a84c;
+  --gold-dim: #8a7535;
+  --gold-soft: #e8d5a0;
+  --lavender: #9b7dd4;
+  --lavender-light: #c4a8f0;
+  --lavender-pale: #ddd0f0;
+  --twilight-pink: #d4a0c0;
+  --twilight-sky: #7868a8;
+  --cream: #ede8f5;
+  --cream-dim: #9a92a8;
+  --border: #302a50;
+  --border-light: #3d3560;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Noto Sans JP', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Header ─── */
+.header {
+  position: relative;
+  text-align: center;
+  padding: 50px 20px 36px;
+  background: linear-gradient(180deg, #2a2048 0%, #1a1530 60%, var(--bg) 100%);
+  overflow: hidden;
+}
+.header::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
+}
+.header-stars {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.3), transparent),
+              radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.2), transparent),
+              radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.15), transparent),
+              radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.2), transparent),
+              radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.15), transparent);
+  pointer-events: none;
+}
+.header-orn { font-size: 13px; color: var(--gold-dim); letter-spacing: 6px; margin-bottom: 14px; position: relative; }
+.header-moon { font-size: 36px; display: block; margin-bottom: 6px; filter: drop-shadow(0 0 15px rgba(155,125,212,0.4)); position: relative; }
+.header-title {
+  font-family: 'Shippori Mincho', serif; font-size: 30px; font-weight: 800;
+  color: var(--cream); letter-spacing: 4px;
+  text-shadow: 0 0 30px rgba(155,125,212,0.3); line-height: 1.3; position: relative;
+}
+.header-subtitle {
+  font-family: 'Shippori Mincho', serif; font-size: 13px;
+  color: var(--gold); letter-spacing: 3px; margin-top: 10px; position: relative;
+}
+.header-line {
+  width: 50px; height: 1px; margin: 18px auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  position: relative;
+}
+
+/* ─── Main ─── */
+.main { max-width: 440px; margin: 0 auto; padding: 0 16px 40px; }
+
+/* ─── Story ─── */
+.story {
+  text-align: center; padding: 30px 0 20px;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 14px; color: var(--cream); line-height: 2.2;
+}
+.story em { font-style: normal; color: var(--lavender-light); }
+
+/* ─── Section Divider ─── */
+.divider { display: flex; align-items: center; gap: 12px; margin: 32px 0 18px; }
+.divider::before, .divider::after {
+  content: ""; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+}
+.divider-text {
+  font-family: 'Shippori Mincho', serif; font-size: 14px; font-weight: 600;
+  color: var(--gold); letter-spacing: 3px; white-space: nowrap;
+}
+
+/* ─── Tabs ─── */
+.tabs { display: flex; gap: 4px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+.tab {
+  padding: 8px 14px; border-radius: 10px; border: none;
+  background: var(--surface-light); color: var(--cream-dim);
+  font-size: 12px; font-weight: 500; cursor: pointer;
+  white-space: nowrap; font-family: inherit; transition: all 0.2s;
+}
+.tab.active { background: var(--lavender); color: #fff; font-weight: 700; }
+.view { display: none; }
+.view.active { display: block; }
+
+/* ─── Content Card ─── */
+.content-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 12px; overflow: hidden;
+  cursor: pointer; transition: all 0.2s;
+}
+.content-card:hover { border-color: var(--border-light); }
+.cc-top { padding: 16px 16px 12px; }
+.cc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.cc-title-wrap { display: flex; align-items: center; gap: 10px; flex: 1; }
+.cc-icon {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: rgba(155,125,212,0.1); border: 1px solid rgba(155,125,212,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.cc-name { font-size: 15px; font-weight: 700; color: var(--cream); line-height: 1.4; }
+.cc-arrow { color: var(--cream-dim); font-size: 14px; transition: transform 0.2s; padding: 4px; }
+.cc-arrow.open { transform: rotate(180deg); }
+.cc-badges { display: flex; gap: 5px; flex-wrap: wrap; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 6px;
+  font-size: 10px; font-weight: 700;
+}
+.badge-pri-high { background: #2e1a2a; color: #e88aaa; }
+.badge-pri-mid { background: #2e2a1a; color: #e8c86a; }
+.badge-confirmed { background: #1a2e1f; color: #6bcf7f; }
+.badge-planning { background: #2e2a1a; color: #e8c86a; }
+.badge-new { background: rgba(155,125,212,0.2); color: var(--lavender-light); }
+
+.cc-detail { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); margin-top: 4px; padding-top: 14px; }
+.cc-detail.show { display: block; }
+.cc-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.cc-label { color: var(--cream-dim); font-size: 12px; min-width: 60px; flex-shrink: 0; }
+.cc-value { font-size: 12px; color: var(--cream); line-height: 1.6; }
+.cc-notes {
+  background: var(--surface-light); border-radius: 8px; padding: 10px 12px;
+  font-size: 12px; color: var(--cream-dim); line-height: 1.8; margin-top: 6px;
+}
+
+/* ─── Staff ─── */
+.staff-card {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border-radius: 10px; padding: 12px;
+  border: 1px solid var(--border); margin-bottom: 8px;
+}
+.staff-icon {
+  width: 32px; height: 32px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.staff-info { flex: 1; }
+.staff-task { font-size: 13px; font-weight: 700; color: var(--cream); margin-bottom: 2px; }
+.staff-name { font-size: 12px; color: var(--lavender-light); }
+.staff-note { font-size: 11px; color: var(--cream-dim); margin-top: 2px; }
+
+/* ─── Schedule ─── */
+.tl-item { display: flex; gap: 12px; }
+.tl-dot-col { display: flex; flex-direction: column; align-items: center; width: 16px; }
+.tl-dot { width: 10px; height: 10px; border-radius: 5px; flex-shrink: 0; }
+.tl-line { width: 1px; flex: 1; min-height: 16px; background: var(--border); }
+.tl-content { flex: 1; padding-bottom: 18px; }
+.tl-date { font-family: 'Shippori Mincho', serif; font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.tl-task { font-size: 12px; color: var(--cream-dim); line-height: 1.6; }
+
+/* ─── Budget ─── */
+.budget-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.budget-row:last-child { border-bottom: none; }
+.budget-item { color: var(--cream); }
+.budget-price { color: var(--gold); font-weight: 600; }
+.budget-total {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 14px; margin-top: 10px;
+  background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 8px; font-size: 14px; font-weight: 700;
+}
+
+/* ─── Other items ─── */
+.other-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px; margin-bottom: 10px;
+}
+.other-title { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.other-title span:first-child { font-size: 18px; }
+.other-title span:last-child { font-size: 14px; font-weight: 700; color: var(--cream); }
+.other-desc { font-size: 12px; color: var(--cream-dim); line-height: 1.7; }
+
+/* ─── Footer ─── */
+.footer {
+  text-align: center; padding: 28px 20px; margin-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.footer-orn { font-size: 12px; color: var(--gold-dim); letter-spacing: 4px; margin-bottom: 8px; }
+.footer-text { font-size: 12px; color: var(--cream-dim); line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-stars"></div>
+  <div class="header-orn">─ ✦ ─</div>
+  <span class="header-moon">☽</span>
+  <h1 class="header-title">ねるねる<br>シアター</h1>
+  <p class="header-subtitle">月雲ねる 生誕企画 2026</p>
+  <div class="header-line"></div>
+</header>
+
+<main class="main">
+
+  <div class="story">
+    去年の「NeruNeru Sweets Land」で<br>
+    過ごした一日の終わり。<br>
+ 夜になった、<br>
+    <em>その続きのお話です。</em><br><br>
+    今宵、ねるちゃんだけの劇場で、<br>
+    ねるちゃんだけの物語が<em>幕を開けます。</em>
+  </div>
+
+  <div class="divider"><span class="divider-text">企 画 概 要</span></div>
+
+  <div class="tabs" id="mainTabs">
+    <button class="tab active" data-view="contents">🎭 コンテンツ</button>
+    <button class="tab" data-view="staff">👥 担当</button>
+    <button class="tab" data-view="schedule">📅 スケジュール</button>
+    <button class="tab" data-view="budget">💰 予算</button>
+    <button class="tab" data-view="other">📌 その他</button>
+  </div>
+
+  <!-- ═══ Contents ═══ -->
+  <div class="view active" id="view-contents">
+    <div id="cards"></div>
+  </div>
+
+  <!-- ═══ Staff ═══ -->
+  <div class="view" id="view-staff">
+    <div id="staffList"></div>
+  </div>
+
+  <!-- ═══ Schedule ═══ -->
+  <div class="view" id="view-schedule">
+    <div id="timeline"></div>
+  </div>
+
+  <!-- ═══ Budget ═══ -->
+  <div class="view" id="view-budget">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;">
+      <div id="budgetList"></div>
+      <div class="budget-total">
+        <span style="color:var(--cream)">合計（概算）</span>
+        <span style="color:var(--gold)">約 10,200〜11,200円</span>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:var(--cream-dim);line-height:1.7;">
+        ※＋ 予備費は数千円とっておきたい<br>
+        ※ 去年は約2万円
+              </div>
+    </div>
+  </div>
+
+  <!-- ═══ Other ═══ -->
+  <div class="view" id="view-other">
+    <div id="otherList"></div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-orn">─ ✦ ─</div>
+  <div class="footer-text">
+    みんなの想いが集まって、<br>
+    世界にひとつの「ねるねるシアター」が完成します。<br><br>
+    月雲ねる応援企画委員会
+  </div>
+</footer>
+
+<script>
+const contents = [
+  { id:1, icon:"💌", name:"お祝いメッセージ", priority:"high", status:"confirmed",
+    deadline:"8/15（集計結果共有必須）", staff:"フォーム管理：skyさん ／ ページ制作（メッセージ文字入れ）：かなっぴさん・るりいろさん＋協力者募集",
+    detail:"オンラインフォームで募集し、アルバムに掲載します。" },
+  { id:2, icon:"📊", name:"アンケート＋他企画", priority:"high", status:"confirmed",
+    deadline:"質問内容：7/11決定 → フォーム：7/17作成 → 集計：8/15必須", staff:"フォーム作成：めんやさん・ガンチャンさん",
+    detail:"質問案も募集中です！この1年のロリータコーデ、衣装についてなど。アイデアあれば7/11までに教えてください。" },
+  { id:3, icon:"🎨", name:"ファンアート → トレカ化", priority:"high", status:"confirmed",
+    deadline:"ファンアート締切：8月末 → トレカ入稿：9月頭", staff:"印刷・カット：あしーたさんに打診予定 ／ 梱包：できる方募集",
+    detail:"ブロマイドとも検討した結果、費用・扱いやすさ的にトレカが適していると判断しました。\n\n【仕様】両面印刷・一般的なトレカサイズ（端3mm余白）\n【テーマ】自由。ねるちゃんが主役であればOK！ビジュアルイメージに合わせてもOK！\n【お礼】描いてくれた方にはご自身のイラストのトレカ1枚をプレゼント（手渡し可能な方・希望者のみ）\n【遠方の方】デジタルデータ（パッケージ・表裏写真）で対応\n\n詳細はファンアート用スレッドにて！" },
+  { id:4, icon:"🧸", name:"アクスタ一覧", priority:"high", status:"confirmed",
+    deadline:"7月中旬〜下旬", staff:"撮影：アキコ",
+    detail:"この1年で発売されたアクスタを撮影・一覧化。去年ねるちゃん本人に喜ばれた実績あり！" },
+  { id:5, icon:"📸", name:"お仕事アーカイブ", priority:"high", status:"confirmed",
+    deadline:"情報まとめ：7月中旬まで ／ 素材集め：7月下旬まで", staff:"情報まとめ：skyさんに打診予定",
+    detail:"お茶会（Neru Neru Tea Party）・モデル（chalmière, Merveille）・コラボ・PR（カラコン、cakewith、シャルミエールインスタライブ）等のソロ活動をまとめます。\n日付・内容・写真をスプレッドシートに整理予定。過去の生誕情報も含む。" },
+  { id:6, icon:"🎭", name:"推しコンテンツ要素", priority:"high", status:"planning",
+    deadline:"7月中旬までにできるだけ収集", staff:"るりいろさん・りえさん・あしーたさん・くぅみさん",
+    detail:"ねるちゃんの好きなコンテンツの要素をアルバム各所にちりばめます。\n\n【収集したいもの】\n・色合い、モチーフ、ミーム\n・一目見て「あのコンテンツだ！」とわかるもの\n\n【対象コンテンツ例】\nM!LK / まほやく（舞台） / ヒプステ / セーラームーンシアター / あくねこ / サンリオ（ピューロ） / ブレマイ / ルルットリリィ / 龍が如くetc.\n\n画像1枚でもOK！スレッドに随時共有してください 🙏" },
+  { id:7, icon:"🎵", name:"アルバム音楽（QR）", priority:"mid", status:"planning", isNew:true,
+    deadline:"8月中旬", staff:"制作：アキコ ／ 音楽の方向性：要相談",
+    detail:"パンフレットにQRコードを掲載し、音楽が聴ける演出。前例のない斬新な企画です！\nクオリティは個人的にいけると判断、メンバーの反応待ち。" },
+];
+
+const staffData = [
+  { icon:"🎨", task:"アルバムデザイン・ページ制作", name:"アキコ", note:"" },
+  { icon:"💌", task:"メッセージページ制作", name:"かなっぴさん・るりいろさん＋協力者募集", note:"" },
+  { icon:"📊", task:"メッセージフォーム管理", name:"skyさん", note:"" },
+  { icon:"📝", task:"アンケート等フォーム作成", name:"めんやさん・ガンチャンさん", note:"" },
+  { icon:"📸", task:"お仕事アーカイブ情報まとめ", name:"skyさん", note:"打診予定" },
+  { icon:"🎴", task:"トレカ印刷・カット", name:"あしーたさん", note:"打診予定" },
+  { icon:"🎴", task:"トレカ梱包", name:"できる方募集！", note:"" },
+  { icon:"🎭", task:"推しコンテンツ情報収集", name:"るりいろさん・りえさん・あしーたさん+他委員外協力あり", note:"" },
+  { icon:"🎨", task:"イラスト・装飾モチーフ", name:"るりいろさん・ぱるかちゃん", note:"" },
+  { icon:"📄", task:"配布用紙 印刷・カット", name:"配布開始のイベントに行ける方募集！", note:"" },
+];
+
+const tlData = [
+  { date:"〜7/11", tasks:["アンケート質問内容決定"], color:"#9b7dd4" },
+  { date:"〜7月上旬", tasks:["配布用紙デザイン（アキコ）"], color:"#9b7dd4" },
+  { date:"〜7/17", tasks:["各種フォーム作成"], color:"#9b7dd4" },
+  { date:"〜7月中旬", tasks:["推しコンテンツ情報収集","お仕事アーカイブ情報まとめ"], color:"#c9a84c" },
+  { date:"7/18〜22", tasks:["紙配布開始 ・ 募集スタート"], color:"#6bcf7f" },
+  { date:"〜7月下旬", tasks:["アクスタ撮影","お仕事アーカイブ素材集め"], color:"#c9a84c" },
+  { date:"〜7月中", tasks:["表紙アイデア出し"], color:"#9b7dd4" },
+  { date:"〜8/15", tasks:["メッセージ・アンケート締切＆集計（必須）"], color:"#e88aaa" },
+  { date:"〜8月末", tasks:["ファンアート締切","パンフレット入稿"], color:"#e88aaa" },
+  { date:"〜9月頭", tasks:["トレカ入稿"], color:"#e88aaa" },
+  { date:"9/15 🎂", tasks:["生誕ライブ！！"], color:"#d4a0c0" },
+];
+
+const budgetData = [
+  { item:"冊子印刷", price:"〜5,000円" },
+  { item:"アルミ蒸着袋（トレカ梱包用）", price:"〜1,000円" },
+  { item:"トレカ印刷", price:"〜1,700円" },
+  { item:"配布用紙（300枚・白黒）", price:"〜500円" },
+  { item:"シール・ステッカー", price:"2,000〜3,000円" },
+  { item:"音楽（Suno月額）", price:"別途" },
+];
+
+const otherData = [
+  { icon:"📄", title:"配布用紙", desc:"7/18（できれば）〜7/22（必須）から各イベントで配布開始。<BR>デザイン：アキコ（7月上旬）。<BR>コンビニ印刷→自宅or作業できる場所でカット。<BR><b>印刷・カットできる方（配布開始のイベントに行ける方）募集中！</b>" },
+  { icon:"🏪", title:"DSのぼり", desc:"やるか検討中。<BR>確認事項：予算・納期・デザイン。<BR>デザイン案：「月雲ねる様 祝・生誕 ねる推しより」CYNHN系で（新衣装かわいい）" },
+  { icon:"🖼️", title:"表紙", desc:"7月中にアイデア出し → 8月上旬調整 → 8月中旬決定。<BR>イラスト入れるか？公演ポスター風にするか？等検討中。<BR>アイデア大歓迎です！" },
+  { icon:"📖", title:"過去の公演一覧ページ", desc:"過去の生誕ライブビジュアルを掲載（余裕があれば）" },
+  { icon:"🤖", title:"進行タスク管理Bot", desc:"スケジュール管理用のBot導入を検討中。<BR>ねったいやさんが開発を検討してくれています！詳細決まり次第お知らせします。" },
+];
+
+let expandedId = null;
+
+function badge(label, cls) { return `<span class="badge ${cls}">${label}</span>`; }
+
+function renderContents() {
+  document.getElementById("cards").innerHTML = contents.map(c => {
+    const isOpen = expandedId === c.id;
+    const badges = [];
+    if (c.priority === "high") badges.push(badge("優先度：高","badge-pri-high"));
+    if (c.priority === "mid") badges.push(badge("優先度：中","badge-pri-mid"));
+    if (c.status === "confirmed") badges.push(badge("確定","badge-confirmed"));
+    if (c.status === "planning") badges.push(badge("検討中","badge-planning"));
+    if (c.isNew) badges.push(badge("✨ NEW","badge-new"));
+    return `
+      <div class="content-card" onclick="toggle(${c.id})">
+        <div class="cc-top">
+          <div class="cc-header">
+            <div class="cc-title-wrap">
+              <div class="cc-icon">${c.icon}</div>
+              <span class="cc-name">${c.name}</span>
+            </div>
+            <span class="cc-arrow ${isOpen?'open':''}">▾</span>
+          </div>
+          <div class="cc-badges">${badges.join('')}</div>
+        </div>
+        <div class="cc-detail ${isOpen?'show':''}">
+          <div class="cc-row"><span class="cc-label">締切</span><span class="cc-value" style="color:var(--gold)">${c.deadline}</span></div>
+          <div class="cc-row"><span class="cc-label">担当</span><span class="cc-value" style="color:var(--lavender-light)">${c.staff}</span></div>
+          <div class="cc-notes">${c.detail.replace(/\n/g,'<br>')}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderStaff() {
+  document.getElementById("staffList").innerHTML = staffData.map(s => `
+    <div class="staff-card">
+      <div class="staff-icon" style="background:rgba(155,125,212,0.1);border:1px solid rgba(155,125,212,0.2)">${s.icon}</div>
+      <div class="staff-info">
+        <div class="staff-task">${s.task}</div>
+        <div class="staff-name">${s.name}</div>
+        ${s.note ? `<div class="staff-note">※ ${s.note}</div>` : ''}
+      </div>
+    </div>`).join('') + `
+    <div style="margin-top:14px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:12px;color:var(--cream-dim);line-height:1.7;">
+      ※ まだ確定ではありません。これから個別にご相談させていただきます。<br>
+      ※ 難しい場合は遠慮なく言ってください 🙏
+    </div>`;
+}
+
+function renderTimeline() {
+  document.getElementById("timeline").innerHTML = tlData.map((t,i) => `
+    <div class="tl-item">
+      <div class="tl-dot-col">
+        <div class="tl-dot" style="background:${t.color};${t.date.includes('🎂')?'box-shadow:0 0 8px rgba(212,160,192,0.5)':''}"></div>
+        ${i<tlData.length-1?'<div class="tl-line"></div>':''}
+      </div>
+      <div class="tl-content">
+        <div class="tl-date" style="color:${t.color}">${t.date}</div>
+        ${t.tasks.map(task=>`<div class="tl-task">${t.date.includes('🎂')?'🎉 ':'• '}${task}</div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function renderBudget() {
+  document.getElementById("budgetList").innerHTML = budgetData.map(b => `
+    <div class="budget-row">
+      <span class="budget-item">${b.item}</span>
+      <span class="budget-price">${b.price}</span>
+    </div>`).join('');
+}
+
+function renderOther() {
+  document.getElementById("otherList").innerHTML = otherData.map(o => `
+    <div class="other-card">
+      <div class="other-title"><span>${o.icon}</span><span>${o.title}</span></div>
+      <div class="other-desc">${o.desc}</div>
+    </div>`).join('');
+}
+
+function toggle(id) { expandedId = expandedId===id ? null : id; renderContents(); }
+
+document.getElementById("mainTabs").addEventListener("click", function(e) {
+  const btn = e.target.closest(".tab"); if(!btn) return;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.getElementById("view-"+btn.dataset.view).classList.add("active");
+});
+
+renderContents(); renderStaff(); renderTimeline(); renderBudget(); renderOther();
+</script>
+</body>
+</html>
